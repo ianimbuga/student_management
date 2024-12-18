@@ -105,6 +105,60 @@
 #         return courses
 
 
+# import sqlite3
+
+# class Course:
+#     def __init__(self, id=None, course_title=None, course_duration=None):
+#         self.id = id
+#         self.course_title = course_title
+#         self.course_duration = course_duration
+    
+#     @staticmethod
+#     def get_all():
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT * FROM courses")
+#         rows = cursor.fetchall()
+#         courses = []
+#         for row in rows:
+#             course = Course(id=row[0], course_title=row[1], course_duration=row[2])
+#             courses.append(course)
+#         conn.close()
+#         return courses
+
+#     @staticmethod
+#     def get_by_id(course_id):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT * FROM courses WHERE id = ?", (course_id,))
+#         row = cursor.fetchone()
+#         conn.close()
+#         if row:
+#             return Course(id=row[0], course_title=row[1], course_duration=row[2])
+#         else:
+#             return None
+
+#     def save(self):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+
+#         if self.id is None:  # New course, insert into the table
+#             cursor.execute("INSERT INTO courses (course_title, course_duration) VALUES (?, ?)", (self.course_title, self.course_duration))
+#         else:  # Existing course, update it
+#             cursor.execute("UPDATE courses SET course_title = ?, course_duration = ? WHERE id = ?", (self.course_title, self.course_duration, self.id))
+
+#         conn.commit()
+#         conn.close()
+
+#     @staticmethod
+#     def delete(course_id):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("DELETE FROM courses WHERE id = ?", (course_id,))
+#         conn.commit()
+#         conn.close()
+
+
 import sqlite3
 
 class Course:
@@ -112,48 +166,30 @@ class Course:
         self.id = id
         self.course_title = course_title
         self.course_duration = course_duration
-    
-    @staticmethod
-    def get_all():
+
+    def save(self):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM courses")
-        rows = cursor.fetchall()
-        courses = []
-        for row in rows:
-            course = Course(id=row[0], course_title=row[1], course_duration=row[2])
-            courses.append(course)
+        cursor.execute("INSERT INTO courses (course_title, course_duration) VALUES (?, ?)", (self.course_title, self.course_duration))
+        conn.commit()
         conn.close()
-        return courses
 
-    @staticmethod
-    def get_by_id(course_id):
+    @classmethod
+    def get_by_id(cls, course_id):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM courses WHERE id = ?", (course_id,))
         row = cursor.fetchone()
         conn.close()
         if row:
-            return Course(id=row[0], course_title=row[1], course_duration=row[2])
-        else:
-            return None
+            return cls(*row)
+        return None
 
-    def save(self):
+    @classmethod
+    def all(cls):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
-
-        if self.id is None:  # New course, insert into the table
-            cursor.execute("INSERT INTO courses (course_title, course_duration) VALUES (?, ?)", (self.course_title, self.course_duration))
-        else:  # Existing course, update it
-            cursor.execute("UPDATE courses SET course_title = ?, course_duration = ? WHERE id = ?", (self.course_title, self.course_duration, self.id))
-
-        conn.commit()
+        cursor.execute("SELECT * FROM courses")
+        rows = cursor.fetchall()
         conn.close()
-
-    @staticmethod
-    def delete(course_id):
-        conn = sqlite3.connect('student_management.db')
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM courses WHERE id = ?", (course_id,))
-        conn.commit()
-        conn.close()
+        return [cls(*row) for row in rows]

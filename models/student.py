@@ -47,6 +47,82 @@
 #         return students
 
 
+# import sqlite3
+
+# class Student:
+#     def __init__(self, id=None, name=None, age=None):
+#         self.id = id
+#         self.name = name
+#         self.age = age
+    
+#     @staticmethod
+#     def get_all():
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT * FROM students")
+#         rows = cursor.fetchall()
+#         students = []
+#         for row in rows:
+#             student = Student(id=row[0], name=row[1], age=row[2])
+#             students.append(student)
+#         conn.close()
+#         return students
+    
+#     @staticmethod
+#     def get_by_id(student_id):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT * FROM students WHERE id = ?", (student_id,))
+#         row = cursor.fetchone()
+#         conn.close()
+#         if row:
+#             return Student(id=row[0], name=row[1], age=row[2])
+#         else:
+#             return None
+
+#     def save(self):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+        
+#         if self.id is None:  # New student, insert into the table
+#             cursor.execute("INSERT INTO students (name, age) VALUES (?, ?)", (self.name, self.age))
+#         else:  # Existing student, update their details
+#             cursor.execute("UPDATE students SET name = ?, age = ? WHERE id = ?", (self.name, self.age, self.id))
+        
+#         conn.commit()
+#         conn.close()
+
+#     @staticmethod
+#     def delete(student_id):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
+#         conn.commit()
+#         conn.close()
+
+#     # Enroll the student in a course
+#     def enroll(self, course_id):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute("INSERT INTO enrollments (student_id, course_id) VALUES (?, ?)", (self.id, course_id))
+#         conn.commit()
+#         conn.close()
+
+#     # Get all courses a student is enrolled in
+#     def get_enrolled_courses(self):
+#         conn = sqlite3.connect('student_management.db')
+#         cursor = conn.cursor()
+#         cursor.execute('''
+#             SELECT c.id, c.course_title, c.course_duration 
+#             FROM courses c
+#             JOIN enrollments e ON c.id = e.course_id
+#             WHERE e.student_id = ?
+#         ''', (self.id,))
+#         courses = cursor.fetchall()
+#         conn.close()
+#         return courses
+
+
 import sqlite3
 
 class Student:
@@ -54,53 +130,34 @@ class Student:
         self.id = id
         self.name = name
         self.age = age
-    
-    @staticmethod
-    def get_all():
+
+    def save(self):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM students")
-        rows = cursor.fetchall()
-        students = []
-        for row in rows:
-            student = Student(id=row[0], name=row[1], age=row[2])
-            students.append(student)
+        cursor.execute("INSERT INTO students (name, age) VALUES (?, ?)", (self.name, self.age))
+        conn.commit()
         conn.close()
-        return students
-    
-    @staticmethod
-    def get_by_id(student_id):
+
+    @classmethod
+    def get_by_id(cls, student_id):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM students WHERE id = ?", (student_id,))
         row = cursor.fetchone()
         conn.close()
         if row:
-            return Student(id=row[0], name=row[1], age=row[2])
-        else:
-            return None
+            return cls(*row)
+        return None
 
-    def save(self):
+    @classmethod
+    def all(cls):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
-        
-        if self.id is None:  # New student, insert into the table
-            cursor.execute("INSERT INTO students (name, age) VALUES (?, ?)", (self.name, self.age))
-        else:  # Existing student, update their details
-            cursor.execute("UPDATE students SET name = ?, age = ? WHERE id = ?", (self.name, self.age, self.id))
-        
-        conn.commit()
+        cursor.execute("SELECT * FROM students")
+        rows = cursor.fetchall()
         conn.close()
+        return [cls(*row) for row in rows]
 
-    @staticmethod
-    def delete(student_id):
-        conn = sqlite3.connect('student_management.db')
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
-        conn.commit()
-        conn.close()
-
-    # Enroll the student in a course
     def enroll(self, course_id):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
@@ -108,16 +165,15 @@ class Student:
         conn.commit()
         conn.close()
 
-    # Get all courses a student is enrolled in
-    def get_enrolled_courses(self):
+    def view_enrollments(self):
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
-        cursor.execute('''
-            SELECT c.id, c.course_title, c.course_duration 
-            FROM courses c
-            JOIN enrollments e ON c.id = e.course_id
-            WHERE e.student_id = ?
-        ''', (self.id,))
+        cursor.execute("""
+            SELECT courses.course_title 
+            FROM courses
+            JOIN enrollments ON courses.id = enrollments.course_id
+            WHERE enrollments.student_id = ?
+        """, (self.id,))
         courses = cursor.fetchall()
         conn.close()
-        return courses
+        return [course[0] for course in courses]
