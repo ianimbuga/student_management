@@ -9,7 +9,7 @@ def setup_db():
     """
     Setup the database schema (creating tables if they don't exist).
     """
-    with open('models/schema.sql', 'r') as schema_file:
-        sql = schema_file.read()
-        CURSOR.executescript(sql)
-        CONN.commit()
+    # with open('models/schema.sql', 'r') as schema_file:
+    #     sql = schema_file.read()
+    #     CURSOR.executescript(sql)
+    #     CONN.commit()
