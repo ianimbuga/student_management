@@ -2,7 +2,6 @@
 
 import sqlite3
 
-# Connect to SQLite database (it will create the database if it doesn't exist)
 CONN = sqlite3.connect('student_management.db')
 CURSOR = CONN.cursor()
 
