@@ -31,21 +31,21 @@ class Student:
         conn = sqlite3.connect('student_management.db')
         cursor = conn.cursor()
 
-        # if name:
-        #     self.name = name
-        # if age:
-        #     self.age = age
-        # if year:
-        #     self.year = year
+        if name:
+            self.name = name
+        if age:
+            self.age = age
+        if year:
+            self.year = year
 
-        # cursor.execute('''
-        #     UPDATE students 
-        #     SET name = ?, age = ?, year = ? 
-        #     WHERE id = ?
-        # ''', (self.name, self.age, self.year, self.id))
+        cursor.execute('''
+            UPDATE students 
+            SET name = ?, age = ?, year = ? 
+            WHERE id = ?
+        ''', (self.name, self.age, self.year, self.id))
 
-        # conn.commit()
-        # conn.close()
+        conn.commit()
+        conn.close()
 
     @staticmethod
     def get_all():
