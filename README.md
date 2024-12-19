@@ -85,8 +85,8 @@ Implement an email notification system to inform students of important updates, 
 4.Integration with External APIs:
 Integrate with educational APIs to provide additional resources or functionality, such as course materials or online assessments.
 
-# License
-This project is licensed under the MIT License - see the LICENSE file for details.
+# LISENCE
+This project is licensed under the MIT License 
 
 # Contributing
 Contributions are welcome! Please create a pull request for any improvements or bug fixes.
