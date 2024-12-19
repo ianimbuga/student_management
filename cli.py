@@ -18,29 +18,29 @@ def main_menu():
 
     choice = input("Choose an option: ")
 
-    # if choice == "1":
-    #     create_student()
-    # elif choice == "2":
-    #     list_students()
-    # elif choice == "3":
-    #     update_student()  
-    # elif choice == "4":
-    #     delete_student()  
-    # elif choice == "5":
-    #     create_course()
-    # elif choice == "6":
-    #     list_courses()
-    # elif choice == "7":
-    #     update_course()  
-    # elif choice == "8":
-    #     delete_course()  
-    # elif choice == "9":
-    #     create_enrollment()
-    # elif choice == "0":
-    #     sys.exit()
-    # else:
-        # print("Invalid choice, please try again.")
-        # main_menu()
+    if choice == "1":
+        create_student()
+    elif choice == "2":
+        list_students()
+    elif choice == "3":
+        update_student()  
+    elif choice == "4":
+        delete_student()  
+    elif choice == "5":
+        create_course()
+    elif choice == "6":
+        list_courses()
+    elif choice == "7":
+        update_course()  
+    elif choice == "8":
+        delete_course()  
+    elif choice == "9":
+        create_enrollment()
+    elif choice == "0":
+        sys.exit()
+    else:
+        print("Invalid choice, please try again.")
+        main_menu()
 
 def create_student():
     name = input("Enter student's name: ")
