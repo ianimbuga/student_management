@@ -21,20 +21,20 @@ class Enrollment:
         enrollment.save()
         return enrollment
 
-    # @classmethod
-    # def get_all(cls):
-    #     sql = "SELECT * FROM enrollments"
-    #     rows = CURSOR.execute(sql).fetchall()
-    #     return [cls(row[1], row[2]) for row in rows]
+    @classmethod
+    def get_all(cls):
+        sql = "SELECT * FROM enrollments"
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls(row[1], row[2]) for row in rows]
 
-    # @classmethod
-    # def find_by_id(cls, enrollment_id):
-    #     sql = "SELECT * FROM enrollments WHERE id = ?"
-    #     row = CURSOR.execute(sql, (enrollment_id,)).fetchone()
-    #     if row:
-    #         return cls(row[1], row[2])
+    @classmethod
+    def find_by_id(cls, enrollment_id):
+        sql = "SELECT * FROM enrollments WHERE id = ?"
+        row = CURSOR.execute(sql, (enrollment_id,)).fetchone()
+        if row:
+            return cls(row[1], row[2])
 
-    # def delete(self):
-    #     sql = "DELETE FROM enrollments WHERE student_id = ? AND course_id = ?"
-    #     CURSOR.execute(sql, (self.student_id, self.course_id))
-    #     CONN.commit()
+    def delete(self):
+        sql = "DELETE FROM enrollments WHERE student_id = ? AND course_id = ?"
+        CURSOR.execute(sql, (self.student_id, self.course_id))
+        CONN.commit()

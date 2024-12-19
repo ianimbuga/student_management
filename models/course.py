@@ -26,39 +26,39 @@ class Course:
         conn.commit()
         conn.close()
 
-    @staticmethod
-    def get_all():
-        conn = sqlite3.connect('student_management.db')
-        cursor = conn.cursor()
+    # @staticmethod
+    # def get_all():
+    #     conn = sqlite3.connect('student_management.db')
+    #     cursor = conn.cursor()
 
-        cursor.execute('SELECT * FROM courses')
-        rows = cursor.fetchall()
+    #     cursor.execute('SELECT * FROM courses')
+    #     rows = cursor.fetchall()
 
-        courses = []
-        for row in rows:
-            course = Course(row[1], row[2], row[0])  
-            courses.append(course)
+    #     courses = []
+    #     for row in rows:
+    #         course = Course(row[1], row[2], row[0])  
+    #         courses.append(course)
 
-        conn.close()
-        return courses
+    #     conn.close()
+    #     return courses
 
-    @staticmethod
-    def find_by_id(course_id):
-        conn = sqlite3.connect('student_management.db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM courses WHERE id = ?', (course_id,))
-        row = cursor.fetchone()
-        conn.close()
-        if row:
-            return Course(row[1], row[2], row[0])
-        return None
+    # @staticmethod
+    # def find_by_id(course_id):
+    #     conn = sqlite3.connect('student_management.db')
+    #     cursor = conn.cursor()
+    #     cursor.execute('SELECT * FROM courses WHERE id = ?', (course_id,))
+    #     row = cursor.fetchone()
+    #     conn.close()
+    #     if row:
+    #         return Course(row[1], row[2], row[0])
+    #     return None
 
-    def delete(self):
-        conn = sqlite3.connect('student_management.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            DELETE FROM courses 
-            WHERE id = ?
-        ''', (self.id,))
-        conn.commit()
-        conn.close()
+    # def delete(self):
+    #     conn = sqlite3.connect('student_management.db')
+    #     cursor = conn.cursor()
+    #     cursor.execute('''
+    #         DELETE FROM courses 
+    #         WHERE id = ?
+    #     ''', (self.id,))
+    #     conn.commit()
+    #     conn.close()
