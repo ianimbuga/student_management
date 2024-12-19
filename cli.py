@@ -10,11 +10,11 @@ def main_menu():
     print("3. Update Student")
     print("4. Delete Student")
     print("5. Create Course")
-    print("6. List Courses")
-    print("7. Update Course")
-    print("8. Delete Course")
-    print("9. Create Enrollment")
-    print("0. Exit")
+    # print("6. List Courses")
+    # print("7. Update Course")
+    # print("8. Delete Course")
+    # print("9. Create Enrollment")
+    # print("0. Exit")
 
     choice = input("Choose an option: ")
 
