@@ -10,37 +10,37 @@ def main_menu():
     print("3. Update Student")
     print("4. Delete Student")
     print("5. Create Course")
-    # print("6. List Courses")
-    # print("7. Update Course")
-    # print("8. Delete Course")
-    # print("9. Create Enrollment")
-    # print("0. Exit")
+    print("6. List Courses")
+    print("7. Update Course")
+    print("8. Delete Course")
+    print("9. Create Enrollment")
+    print("0. Exit")
 
     choice = input("Choose an option: ")
 
-    if choice == "1":
-        create_student()
-    elif choice == "2":
-        list_students()
-    elif choice == "3":
-        update_student()  
-    elif choice == "4":
-        delete_student()  
-    elif choice == "5":
-        create_course()
-    elif choice == "6":
-        list_courses()
-    elif choice == "7":
-        update_course()  
-    elif choice == "8":
-        delete_course()  
-    elif choice == "9":
-        create_enrollment()
-    elif choice == "0":
-        sys.exit()
-    else:
-        print("Invalid choice, please try again.")
-        main_menu()
+    # if choice == "1":
+    #     create_student()
+    # elif choice == "2":
+    #     list_students()
+    # elif choice == "3":
+    #     update_student()  
+    # elif choice == "4":
+    #     delete_student()  
+    # elif choice == "5":
+    #     create_course()
+    # elif choice == "6":
+    #     list_courses()
+    # elif choice == "7":
+    #     update_course()  
+    # elif choice == "8":
+    #     delete_course()  
+    # elif choice == "9":
+    #     create_enrollment()
+    # elif choice == "0":
+    #     sys.exit()
+    # else:
+        # print("Invalid choice, please try again.")
+        # main_menu()
 
 def create_student():
     name = input("Enter student's name: ")
