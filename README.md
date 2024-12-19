@@ -15,6 +15,7 @@ A Python-based CLI application that manages student and course data using SQLAlc
 ## Features
 - **Add**: Create new student and course entries.
 - **Update**: Modify existing student and course details.
+- **Delete**: Remove students and courses from the database.
 - **List**: Display all students and courses.
 - **Validation**: Ensure input data meets specified criteria.
 
